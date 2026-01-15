@@ -46,7 +46,8 @@ const Navbar = () => {
     const [marketData, setMarketData] = useState({ gold: 12500, silver: 245 });
 
     useEffect(() => {
-        const socket = io('http://127.0.0.1:5005');
+        const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || 'http://127.0.0.1:5005';
+        const socket = io(SOCKET_URL);
 
         socket.on('marketUpdate', (data) => {
             setMarketData(data);

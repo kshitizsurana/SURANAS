@@ -20,6 +20,7 @@ const io = new Server(server, {
 });
 
 app.use(cors());
+app.set('trust proxy', 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -84,11 +85,15 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', message: 'LUXE Jewelry API is running' });
 });
 
+const fs = require('fs');
+
 // Root route
 app.get('/', (req, res) => {
-    if (process.env.NODE_ENV === 'production') {
-        const buildPath = path.join(__dirname, '../build');
-        res.sendFile(path.join(buildPath, 'index.html'));
+    const buildPath = path.join(__dirname, '../build');
+    const indexPath = path.join(buildPath, 'index.html');
+
+    if (process.env.NODE_ENV === 'production' && fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
     } else {
         res.json({
             status: 'OK',
@@ -105,9 +110,12 @@ app.get('/', (req, res) => {
     }
 });
 
-// Serve static files from the React app build folder in production
+// Serve static files from the React app build folder in production if it exists
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../build')));
+    const buildPath = path.join(__dirname, '../build');
+    if (fs.existsSync(buildPath)) {
+        app.use(express.static(buildPath));
+    }
 }
 
 // 404 Handler

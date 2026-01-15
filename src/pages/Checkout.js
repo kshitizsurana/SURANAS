@@ -5,7 +5,10 @@ import { useToast } from '../context/ToastContext';
 import { useAuth } from '../context/AuthContext';
 import { FiLock, FiChevronLeft, FiCheckCircle, FiCreditCard, FiSmartphone } from 'react-icons/fi';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5005/api';
+
 const Checkout = () => {
+
     const { cartItems, cartTotal, clearCart } = useCart();
     const { user } = useAuth();
     const { success, error } = useToast();
@@ -39,7 +42,7 @@ const Checkout = () => {
     const handleRazorpayPayment = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://127.0.0.1:5005/api/payment/order', {
+            const response = await fetch(`${API_URL}/payment/order`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -60,7 +63,7 @@ const Checkout = () => {
                 image: "https://images.unsplash.com/photo-1616150638538-ffb0679a3fc4?q=80&w=100&auto=format&fit=crop",
                 order_id: order.id,
                 handler: async function (response) {
-                    const verifyRes = await fetch('http://127.0.0.1:5005/api/payment/verify', {
+                    const verifyRes = await fetch(`${API_URL}/payment/verify`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(response)
