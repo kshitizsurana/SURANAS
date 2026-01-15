@@ -1,0 +1,37 @@
+{
+  "name": "suranas-jewellers-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Suranas Jewellers e-commerce platform with Express, MongoDB, and Razorpay",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "seed": "node seeder.js"
+  },
+  "keywords": [
+    "api",
+    "ecommerce",
+    "jewelry",
+    "express",
+    "mongodb",
+    "razorpay",
+    "jwt",
+    "authentication"
+  ],
+  "author": "Kshitiz Surana",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.0.1",
+    "razorpay": "^2.9.6",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
